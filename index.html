@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ダイズイズグッド・メンバーズ</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Zen Kaku Gothic New', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #fff;
+            font-weight: 600;
+        }
+
+        .container {
+            max-width: 375px;
+            margin: 0 auto;
+            padding: 20px 15px;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 0;
+            background-color: #fff;
+        }
+
+        .header-image {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* Description */
+        .description {
+            font-size: 14px;
+            line-height: 1.8;
+            margin-bottom: 30px;
+            text-align: left;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .description-title {
+            margin-bottom: 15px;
+        }
+
+        /* Membership Table - PDFと同じ横並びリスト */
+        .membership-table {
+            margin-bottom: 30px;
+        }
+
+        .rank-item {
+            display: grid;
+            grid-template-columns: 3fr 2.5fr 4fr;
+            gap: 10px;
+            padding: 15px 0;
+            margin-bottom: 10px;
+            font-size: 16px;
+            align-items: center;
+        }
+
+        .rank-left {
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #333;
+            padding-bottom: 8px;
+            white-space: nowrap;
+        }
+
+        .rank-circle {
+            width: 18px;
+            height: 18px;
+            margin-right: 6px;
+            flex-shrink: 0;
+        }
+
+        .rank-circle img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .rank-name {
+            font-weight: 600;
+            font-size: 15px;
+        }
+
+        .rank-center {
+            text-align: center;
+            border-bottom: 1px solid #333;
+            padding-bottom: 8px;
+            font-weight: 600;
+            font-size: 16px;
+            white-space: nowrap;
+        }
+
+        .rank-right {
+            text-align: right;
+            border-bottom: 1px solid #333;
+            padding-bottom: 8px;
+            font-weight: 500;
+            font-size: 14px;
+            white-space: nowrap;
+        }
+
+        /* Point System - PDFと同じテーブル形式 */
+        .point-system {
+            margin-bottom: 40px;
+        }
+
+        .point-table {
+            border-top: 2px solid #333;
+            width: 100%;
+        }
+
+        .point-header {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            border-bottom: 1px solid #333;
+        }
+
+        .point-header-left {
+            text-align: center;
+            padding: 12px 10px;
+            font-size: 16px;
+            font-weight: 600;
+            border-right: 1px solid #333;
+        }
+
+        .point-header-right {
+            text-align: center;
+            padding: 12px 10px;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .point-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            border-bottom: 1px solid #333;
+        }
+
+        .point-content-left {
+            padding: 25px 15px;
+            text-align: center;
+            border-right: 1px solid #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .point-content-right {
+            padding: 25px 15px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .point-equation {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .point-circle-1p {
+            width: 50px;
+            height: 50px;
+            border: 2px solid #333;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            font-weight: 600;
+            background-color: #fff;
+        }
+
+        .point-circle-1yen {
+            width: 50px;
+            height: 50px;
+            background-color: #333;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .equals {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .point-description-text {
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .point-usage-visual {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .point-circle-usage {
+            width: 50px;
+            height: 50px;
+            border: 2px solid #333;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 600;
+            background-color: #fff;
+        }
+
+        .arrow-right {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .noodle-container {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .noodle-container img {
+            max-width: 45px;
+            max-height: 45px;
+            object-fit: contain;
+        }
+
+        .point-note {
+            font-size: 9px;
+            color: #333;
+            text-align: left;
+            padding: 12px 15px;
+            font-weight: 500;
+        }
+
+        /* Benefits Section - PDFと同じレイアウト */
+        .benefits-section {
+            margin-bottom: 40px;
+        }
+
+        .benefits-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .benefits-title {
+            font-size: 16px;
+            margin-bottom: 15px;
+            font-weight: 500;
+            position: relative;
+            display: inline-block;
+            margin-left: -170px;
+        }
+
+        .benefits-title::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: -20px;
+            width: 86px;
+            height: 26px;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 85.7217533 25.6544391"><path fill="none" stroke="%231a1a1a" stroke-miterlimit="10" d="M.7961397.0950447C-.5924611,7.2668376,3.0097976,15.1312443,9.3474118,18.7640766c7.5946948,4.3534136,17.0373829,2.5418501,25.7023911,1.2971688,8.6650082-1.2446813,18.7876767-1.2769552,24.6067986,5.2607624-1.8497674-2.1022288-.9339828-4.7916881,1.401615-5.8121461,2.8601297-1.2496293,6.141166-1.2873245,9.1881828-1.6712854,4.028707-.5076658,8.2577155-1.1668175,11.4484498-3.6782752s4.7932558-7.5096878,2.319534-10.7297663"/></svg>');
+            background-repeat: no-repeat;
+            background-size: contain;
+        }
+
+        .benefits-subtitle {
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .yellow-dots {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .dot {
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-top: 12px solid #d8df00;
+        }
+
+        .benefit-item {
+            background-color: #fff;
+            border-bottom: 1px solid #ddd;
+            border-top: 1px solid #ddd;
+            padding: 20px 0;
+            margin-bottom: 15px;
+            text-align: left;
+            width: 100%;
+        }
+
+        .benefit-rank {
+            background-color: #333;
+            color: #fff;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            margin-bottom: 15px;
+            margin-left: 15px;
+        }
+
+        .benefit-rank::before {
+            content: '';
+            width: 18px;
+            height: 18px;
+            margin-right: 8px;
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
+
+        .benefit-rank.gold {
+            background-color: transparent;
+            color: #333;
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .benefit-rank.gold::before {
+            background-image: url('img/gold.png');
+        }
+
+        .benefit-rank.platinum {
+            background-color: transparent;
+            color: #333;
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .benefit-rank.platinum::before {
+            background-image: url('img/platinum.png');
+        }
+
+        .benefit-content {
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            font-weight: 500;
+            padding: 0 15px;
+        }
+
+        .highlight {
+            position: relative;
+            display: inline-block;
+            background-image: url('img/gold_underBar.png');
+            background-repeat: no-repeat;
+            background-position: bottom;
+            background-size: 100% 12px;
+            padding-bottom: 3px;
+        }
+
+        .highlight-platinum {
+            position: relative;
+            display: inline-block;
+            background-image: url('img/platinum_underBar.png');
+            background-repeat: no-repeat;
+            background-position: bottom;
+            background-size: 100% 12px;
+            padding-bottom: 3px;
+        }
+
+        .benefit-image {
+            width: 100%;
+            margin: 0 0 10px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-sizing: border-box;
+            border: 1px solid #e3e3e3;
+        }
+
+        .benefit-image img {
+            max-width: 100%;
+            object-fit: contain;
+        }
+
+        .benefit-note {
+            font-size: 11px;
+            color: #666;
+            padding: 0 15px;
+        }
+
+        .benefit-note {
+            font-size: 11px;
+            color: #666;
+        }
+
+        /* Coupon Section - PDFと同じスタイル */
+        .coupon-section {
+            margin-bottom: 30px;
+        }
+
+        .coupon-header {
+            padding: 20px 15px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .coupon-header img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .coupon-item {
+            margin-bottom: 15px;
+        }
+
+        .coupon-number {
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .coupon-name {
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .coupon-description {
+            font-size: 12px;
+            color: #666;
+            line-height: 1.5;
+            margin-bottom: 10px;
+        }
+
+        .coupon-points {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+            margin-top: 5px;
+        }
+
+        .points-highlight {
+            text-decoration: underline;
+        }
+
+        .coupon-button {
+            display: inline-block;
+            padding: 0;
+            border-radius: 0;
+            font-size: 12px;
+            font-weight: 500;
+            text-decoration: none;
+            margin: 5% 0;
+        }
+
+        .coupon-button img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <img src="img/member_head.png" alt="DAIZ IS GOOD. Members" class="header-image">
+        </div>
+
+        <!-- Description -->
+        <div class="description">
+            <div class="description-title"><strong>ダイズイズグッド・メンバーズ</strong></div>
+            ご購入いただくと自動的にご入会いただけます。金額に応じて会員ランクをご用意しており、会員ランクがアップすると、ポイント付与率が増え、貯まったポイントはお買い物の際に割引としてご利用いただけます。ゴールド会員以上にはノベルティやプレミアムプライベートイベントにご招待！
+        </div>
+
+        <!-- Membership Table -->
+        <div class="membership-table">
+            <div class="rank-item">
+                <div class="rank-left">
+                    <div class="rank-circle"><img src="img/regular.png" alt="Regular"></div>
+                    <div class="rank-name">Regular</div>
+                </div>
+                <div class="rank-center">1%</div>
+                <div class="rank-right">0 - 5,000 円</div>
+            </div>
+            
+            <div class="rank-item">
+                <div class="rank-left">
+                    <div class="rank-circle"><img src="img/silver.png" alt="Silver"></div>
+                    <div class="rank-name">Silver</div>
+                </div>
+                <div class="rank-center">5%</div>
+                <div class="rank-right">5,001 - 15,000 円</div>
+            </div>
+            
+            <div class="rank-item">
+                <div class="rank-left">
+                    <div class="rank-circle"><img src="img/gold.png" alt="Gold"></div>
+                    <div class="rank-name">Gold</div>
+                </div>
+                <div class="rank-center">3%</div>
+                <div class="rank-right">15,001 - 30,000 円</div>
+            </div>
+            
+            <div class="rank-item">
+                <div class="rank-left">
+                    <div class="rank-circle"><img src="img/platinum.png" alt="Platinum"></div>
+                    <div class="rank-name">Platinum</div>
+                </div>
+                <div class="rank-center">7%</div>
+                <div class="rank-right">30,001 - 50,000 円</div>
+            </div>
+            
+            <div class="rank-item">
+                <div class="rank-left">
+                    <div class="rank-circle"><img src="img/black.png" alt="Black"></div>
+                    <div class="rank-name">Black</div>
+                </div>
+                <div class="rank-center">10%</div>
+                <div class="rank-right">50,001 円以上</div>
+            </div>
+        </div>
+
+        <!-- Point System -->
+        <div class="point-system">
+            <div class="point-table">
+                <div class="point-header">
+                    <div class="point-header-left">ポイント</div>
+                    <div class="point-header-right">ポイントを使う</div>
+                </div>
+                
+                <div class="point-content">
+                    <div class="point-content-left">
+                        <div class="point-equation">
+                            <div class="point-circle-1p">1P</div>
+                            <div class="equals">=</div>
+                            <div class="point-circle-1yen">1円</div>
+                        </div>
+                        <div class="point-description-text">1ポイント1円になります</div>
+                    </div>
+                    
+                    <div class="point-content-right">
+                        <div class="point-usage-visual">
+                            <div class="point-circle-usage">Point</div>
+                            <div class="arrow-right">▶</div>
+                            <div class="noodle-container">
+                                <img src="img/point_noodle.png" alt="麺">
+                            </div>
+                        </div>
+                        <div class="point-description-text">ポイントで割引や購入</div>
+                    </div>
+                </div>
+                
+                <div class="point-note">
+                    ※ポイントはマイページより確認でき、決済画面にて利用が可能です。
+                </div>
+            </div>
+        </div>
+
+        <!-- Benefits Section -->
+        <div class="benefits-section">
+            <div class="benefits-header">
+                <div class="benefits-title">さらに</div>
+                <div class="benefits-subtitle">会員ランクが上がると<br>様々な特典が...</div>
+                <div class="yellow-dots">
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                </div>
+            </div>
+
+            <div class="benefit-item">
+                <div class="benefit-rank gold">Gold</div>
+                <div class="benefit-content">
+                    <span class="highlight">レンジクッキングコンテナ</span><br>
+                    <strong>プレゼント！</strong>
+                </div>
+                <div class="benefit-image">
+                    <img src="img/Container.png" alt="レンジクッキングコンテナ">
+                </div>
+                <div class="benefit-note">※デザインは変更することがあります。</div>
+            </div>
+
+            <div class="benefit-item">
+                <div class="benefit-rank platinum">Platinum</div>
+                <div class="benefit-content">
+                    <span class="highlight-platinum">プレミアムプライベートイベント</span><br>
+                    <strong>にご招待！</strong>
+                </div>
+                <div class="benefit-image">
+                    <img src="img/eventSmp.png" alt="プレミアムプライベートイベント">
+                </div>
+                <div class="benefit-note">※イベントの一例です</div>
+            </div>
+        </div>
+
+        <!-- Coupon Section -->
+        <div class="coupon-section">
+            <div class="coupon-header">
+                <img src="img/Pcp_head.png" alt="POINT COUPON PRESENT!! LINE登録・レビュー投稿・友達紹介でオンラインストアで使えるポイントプレゼント！">
+            </div>
+
+            <div class="coupon-item">
+                <div class="coupon-number">1: LINE登録クーポン</div>
+                <div class="coupon-description">公式LINEを登録していただくと</div>
+                <div class="coupon-points"><span class="points-highlight">300ポイント</span>をプレゼント！</div>
+                <div class="coupon-button">
+                    <img src="img/coupon_line.png" alt="300ポイントをプレゼント！">
+                </div>
+            </div>
+
+            <div class="coupon-item">
+                <div class="coupon-number">2: レビュークーポン</div>
+                <div class="coupon-description">オンラインストアからレビュー投稿していただくと</div>
+                <div class="coupon-points"><span class="points-highlight">500ポイント</span>をプレゼント！</div>
+                <div class="coupon-button">
+                    <img src="img/coupon_review.png" alt="500ポイントをプレゼント！">
+                </div>
+            </div>
+
+            <div class="coupon-item">
+                <div class="coupon-number">3: 友達紹介クーポン</div>
+                <div class="coupon-description">友だちに紹介していただくと</div>
+                <div class="coupon-points"><span class="points-highlight">500ポイント</span>をプレゼント！</div>
+                <div class="coupon-button">
+                    <img src="img/coupon_invite.png" alt="500ポイントをプレゼント！">
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
